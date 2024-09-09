@@ -4,101 +4,94 @@ export const dataConfigBase = [
     label: 'Dataset Name',
     isColumn: true,
     createFormConfig: {
+      name: 'datasetName',
       label: 'Dataset Name',
       inputType: 'text',
       isRequired: true,
       isDisabled: true,
       metadata: {
         isDataName: true,
-      }
-    }
+      },
+    },
   },
   {
     key: 'description',
     label: 'Description',
     isColumn: true,
     createFormConfig: {
+      name: 'description',
       label: 'Description',
       inputType: 'text',
-    }
+    },
   },
   {
     key: 'time',
     label: 'Time',
     isColumn: true,
     createFormConfig: {
+      name: 'time',
       label: 'Time',
       inputType: 'date-time',
       isRequired: true,
-    }
+    },
   },
   {
     key: 'resolution',
     label: 'Resolution',
     isColumn: false,
     createFormConfig: {
-      label: 'Select resolution', 
+      name: 'resolution',
+      label: 'Select resolution',
       inputType: 'select',
       isRequired: true,
       metadata: {
         options: [
-          {
-            key: 'four',
-            value: '4 km',
-          },
-          {
-            key: 'ten',
-            value: '10 km'
-          }
-        ]
-      }
-    }
+          { key: 'four', value: '4 km' },
+          { key: 'ten', value: '10 km' },
+        ],
+      },
+    },
   },
   {
     key: 'frequency',
     label: 'Frequency',
     isColumn: false,
     createFormConfig: {
+      name: 'frequency',
       label: 'Select frequency',
       inputType: 'select',
       isRequired: true,
       metadata: {
         options: [
-          {
-            key: 'hour',
-            value: 'hourly',
-            label: 'hourly'
-          },
-          {
-            key: 'day',
-            value: 'daily',
-            label: 'daily'
-          }
-        ]
-      }
-    }
+          { key: 'hour', value: 'hourly' },
+          { key: 'day', value: 'daily' },
+        ],
+      },
+    },
   },
   {
     key: 'isAvailable',
     label: 'Available',
     isColumn: true,
     createFormConfig: {
+      name: 'isAvailable',
       label: 'Available',
       inputType: 'checkbox',
       isRequired: true,
       isDisabled: true,
-    }
+    },
   },
   {
     key: 'file',
     label: 'File',
     isColumn: false,
     createFormConfig: {
+      name: 'file',
       label: 'File',
       inputType: 'file',
       isRequired: true,
       acceptType: '.tif',
-    }
+    },
   },
   {
     key: 'actions',
