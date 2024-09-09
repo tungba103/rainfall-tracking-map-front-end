@@ -9,8 +9,6 @@ import {
   SelectItem,
   SelectProps,
 } from '@nextui-org/react';
-import { now, getLocalTimeZone } from '@internationalized/date';
-import { useDataConfigByUrl } from '@/hooks/useDataConfigByUrl';
 
 export type InputOptionsType = 'text' | 'date-time' | 'checkbox' | 'select' | 'file';
 
@@ -22,9 +20,7 @@ interface IProps {
 
 export type InputFieldOptionsProps = IProps & (InputProps | DatePickerProps | CheckboxProps | SelectProps);
 
-export const InputFieldOptions = ({ type, label, metadata, ...props }: InputFieldOptionsProps) => {
-  const { name } = useDataConfigByUrl();
-
+export const InputFieldOptions = ({ type, label, name, metadata, ...props }: InputFieldOptionsProps) => {
   switch (type) {
     case 'text':
       return (
@@ -33,7 +29,6 @@ export const InputFieldOptions = ({ type, label, metadata, ...props }: InputFiel
           label={label}
           variant='bordered'
           className='mb-4'
-          defaultValue={metadata?.isDataName ? name : ''}
         />
       );
     case 'date-time':
@@ -44,8 +39,6 @@ export const InputFieldOptions = ({ type, label, metadata, ...props }: InputFiel
           className='mb-4'
           hideTimeZone
           showMonthAndYearPickers
-          isRequired
-          defaultValue={now(getLocalTimeZone())}
         />
       );
     case 'checkbox':
@@ -53,7 +46,7 @@ export const InputFieldOptions = ({ type, label, metadata, ...props }: InputFiel
         <Checkbox
           {...(props as CheckboxProps)}
           className='mb-4'
-          checked
+          isSelected
         >
           {label}
         </Checkbox>
@@ -62,10 +55,10 @@ export const InputFieldOptions = ({ type, label, metadata, ...props }: InputFiel
       return (
         <Select
           {...(props as SelectProps)}
-          label='Select resolution'
-          isRequired
+          label={label}
           className='mb-4'
-          defaultSelectedKeys='all'
+          isInvalid
+          errorMessage={`Please select a ${name}`}
         >
           {metadata?.options?.map((option: any) => (
             <SelectItem
