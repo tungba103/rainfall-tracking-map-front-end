@@ -129,29 +129,32 @@ export const dataManagementNavItems =
   label: "DATA MANAGEMENT",
   subItems: [
     {
-      label: "HIMAWARI",
-      name: "HIMAWARI",
-      href: "/data-management/himawari",
-    },
-    {
       label: "IMERG_E",
       name: "IMERG_E",
       href: "/data-management/imerg_e",
+      layer: 'imerg_e_10KM_daily',
     },
     {
       label: "IMERG_L",
       name: "IMERG_L",
       href: "/data-management/imerg_l",
+      layer: 'imerg_l_10KM_daily',
     },
     {
       label: "IMERG_F",
       name: "IMERG_F",
       href: "/data-management/imerg_f",
+      layer: 'imerg_f_10KM_daily',
     },
     {
       label: "GSMaP",
       name: "GSMaP",
       href: "/data-management/gsmap",
+    },
+    {
+      label: "HIMAWARI",
+      name: "HIMAWARI",
+      href: "/data-management/himawari",
     },
     {
       label: "CCS",

@@ -1,11 +1,11 @@
 import { useRoutes } from 'react-router-dom';
 
 import HomePage from '@/pages/HomePage';
-import MapPage from './pages/MapPage';
+import MapPage from './pages/MapPage/MapPage';
 import DashboardPage from '@/pages/DashboardPage';
 import AboutPage from '@/pages/AboutPage';
 import { dataManagementNavItems } from './config/data-management.config';
-import DataSourcesPage from './pages/data-management/DataSourcePage';
+import DataSourcesPage from './pages/DataManagementPage/DataSourcePage';
 
 function RoutesPage() {
   const routes = useRoutes([

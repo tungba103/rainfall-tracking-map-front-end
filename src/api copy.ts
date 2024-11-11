@@ -1,29 +1,9 @@
 import { DateValue } from '@internationalized/date';
 import { toast } from "react-toastify";
 
-const BASE_URL = 'http://127.0.0.1:8000';
-
-export type Dataset = {
-  id: string;
-  added_by: string;
-  added: string;
-  dataset_type_ref: number;
-  metadata_type_ref: number;
-  meta_data: {
-    id: string;
-    crs: string;
-    product: {
-      name: string;
-    };
-    properties: {
-      datetime: string;
-    }
-  }
-}
+const BASE_URL = 'http://127.0.0.1:9000';
 
 export const getDatasets = async (
-  page: number,
-  pageSize: number,
   productName: string, 
   resolution: number,
   // 4 || 10 
@@ -32,14 +12,18 @@ export const getDatasets = async (
   fromTime?: DateValue, 
   toTime?: DateValue,
   mockData?: any[]
-): Promise<Dataset[]> => {
-  const url = `${BASE_URL}/datasets`;
+) => {
+  const url = `${BASE_URL}/datasets/${productName}/${resolution}/${frequency}`;
 
   const params = new URLSearchParams();
 
-  params.append('skip', ((page - 1) * pageSize).toString());
-  params.append('pageSize', pageSize.toString());
-  params.append('product_name', productName);
+  if(fromTime) {
+    params.append('fromTime', fromTime.toString());
+  }
+
+  if(toTime) {
+    params.append('toTime', toTime.toString());
+  }
 
   const queryString = params.toString();
 

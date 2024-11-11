@@ -4,14 +4,14 @@ import { CreateModal } from './components/CreateModal';
 import { DeleteModal } from './components/DeleteModal';
 import { dataTypes } from '@/config/data-management.config';
 
-import { getDatasets } from '../../api';
+import { Dataset, getDatasets } from '../../api';
 import DefaultLayout from '@/layouts/default';
 import { DateRangePicker, Select, SelectItem } from '@nextui-org/react';
 import { CustomTable } from './components/CustomTable';
 import { useColumnConfig } from '@/hooks/useColumnConfig';
 
 export default function DataSourcesPage() {
-  const { label, name: dataName } = useDataConfigByUrl();
+  const { label, layer: dataName } = useDataConfigByUrl();
   const DEFAULT_DATA = [
     {
       key: '1',
@@ -119,7 +119,7 @@ export default function DataSourcesPage() {
 
   const { configColumns } = useColumnConfig();
 
-  const [page] = React.useState(1);
+  const [page, setPage] = React.useState(1);
   const pages = 100;
 
   const [dataSpecs, setDataSpecs] = React.useState<string[]>([
@@ -127,13 +127,15 @@ export default function DataSourcesPage() {
     dataTypes.hourly4.value.frequency,
   ]);
 
-  const [rows, setRows] = React.useState();
+  const [rows, setRows] = React.useState<Dataset[] | undefined>();
 
   React.useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getDatasets(
-          dataName,
+          page,
+          10,
+          dataName ?? '',
           Number(dataSpecs[0]),
           dataSpecs[1],
           undefined,
@@ -147,7 +149,9 @@ export default function DataSourcesPage() {
     };
 
     fetchData();
-  }, [dataName, dataSpecs]);
+  }, [dataName, dataSpecs, page, dataName]);
+
+  console.log('page', page);
 
   return (
     <DefaultLayout>
@@ -199,6 +203,7 @@ export default function DataSourcesPage() {
           rows={rows ?? []}
           columns={configColumns}
           page={page}
+          setPage={setPage}
           totalPages={pages}
         />
       </section>

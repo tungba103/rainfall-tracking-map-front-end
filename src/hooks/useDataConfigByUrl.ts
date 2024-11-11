@@ -5,6 +5,7 @@ type siteConfigType = {
   label: string;
   name: string;
   href: string;
+  layer?: string;
 }
 
 export const useDataConfigByUrl = (): siteConfigType => {
@@ -17,5 +18,5 @@ export const useDataConfigByUrl = (): siteConfigType => {
           return item;
         }
   }
-  return { label: '', name: '', href: ''};
+  return { label: '', name: '', href: '', layer: '' };
 };
