@@ -1,76 +1,55 @@
-import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { Tabs, Tab } from '@nextui-org/react';
+import { GeopolygonLevelTypes, GranularityTypes } from '@/config/constant';
+import { SingleBarChart } from '@/components/SingleBarChart';
+import { useEffect, useState } from 'react';
+import { getRainfallByGranularity } from '@/api/odc-api';
 
 interface CustomBarChartProps {
-  titleName: string;
-  color: string;
-  granularity: {
-    day: boolean;
-    week: boolean;
-    month: boolean;
-    quarter: boolean;
-    year: boolean;
-  };
-  data: {
-    key: string;
-    value: number;
-  }[];
+  level: GeopolygonLevelTypes;
+  geopolygonId: number;
 }
 
-export const CustomBarChart = ({
-  titleName = 'Title',
-  color,
-  granularity = {
-    day: false,
-    week: false,
-    month: false,
-    quarter: false,
-    year: false,
-  },
-  data,
-}: CustomBarChartProps) => {
+export const CustomBarChart = ({ level, geopolygonId }: CustomBarChartProps) => {
+  const [granularity, setGranularity] = useState<GranularityTypes>('day');
+
+  const [chartData, setChartData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const endDate = new Date();
+        const startDate = new Date('2024-01-01');
+        // const startDate = new Date();
+        // startDate.setMonth(startDate.getMonth() - 6);
+
+        const response = await getRainfallByGranularity({
+          layerName: 'imerg_e_10KM_daily',
+          startDate: startDate.toISOString().split('T')[0],
+          endDate: endDate.toISOString().split('T')[0],
+          level,
+          geopolygonId,
+          granularity,
+          outputCrs: 'EPSG:4326',
+          resolutionX: 0.1,
+          resolutionY: 0.1,
+        });
+        setChartData(response?.rainfall_data);
+      } catch (error) {
+        console.error('Failed to fetch data', error);
+      }
+    };
+
+    fetchData();
+  }, [granularity, level, geopolygonId, granularity]);
+
   return (
-    <div className='mb-4'>
-      <div className='flex justify-between align-middle mb-2'>
-        <p className='ms-12 text-xl font-bold'>{titleName}</p>
-        <Tabs
-          className=''
-          aria-label='granularity'
-        >
-          {Object.keys(granularity).map(
-            (key) =>
-              granularity[key as keyof typeof granularity] && (
-                <Tab
-                  key={key}
-                  title={key.charAt(0).toUpperCase() + key.slice(1)}
-                />
-              )
-          )}
-        </Tabs>
-      </div>
-      <ResponsiveContainer
-        // width='100%'
-        // height='100%'
-        minHeight={200}
-        minWidth={200}
-        height={400}
-      >
-        <BarChart
-          width={150}
-          height={40}
-          data={data}
-        >
-          <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='key' />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar
-            dataKey='value'
-            fill={color}
-          />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <SingleBarChart
+      granularity={granularity}
+      setGranularity={setGranularity}
+      titleName='Total Rainfall'
+      color={'#2184d8'}
+      data={chartData ?? []}
+      xKey='time'
+      yKey='Precipitation'
+    />
   );
 };

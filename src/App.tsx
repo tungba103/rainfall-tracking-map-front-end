@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify';
 function App() {
   return (
     <div className='relative flex flex-col h-screen'>
-      <Navbar />
+      {/* <Navbar /> */}
       <RoutesPage />
       <ToastContainer />
     </div>

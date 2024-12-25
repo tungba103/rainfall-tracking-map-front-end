@@ -1,4 +1,4 @@
-import { Dataset } from '@/api';
+import { Dataset } from '@/api/api';
 import { EditIcon } from '@/components/icons';
 import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Pagination, Button } from '@nextui-org/react';
 import React from 'react';

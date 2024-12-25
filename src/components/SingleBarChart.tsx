@@ -1,33 +1,28 @@
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { Tabs, Tab } from '@nextui-org/react';
+import { GranularityTypes } from '@/config/constant';
 
 interface IProps {
-  titleName: string;
-  color: string;
-  granularity: {
-    day: boolean;
-    week: boolean;
-    month: boolean;
-    quarter: boolean;
-    year: boolean;
-  };
   data: {
     key: string;
     value: number;
   }[];
+  xKey: string;
+  yKey: string;
+  granularity: GranularityTypes;
+  setGranularity: (granularity: GranularityTypes) => void;
+  titleName?: string;
+  color?: string;
 }
 
 export const SingleBarChart = ({
   titleName = 'Title',
-  color,
-  granularity = {
-    day: false,
-    week: false,
-    month: false,
-    quarter: false,
-    year: false,
-  },
+  color = '#2184d8',
+  granularity,
+  setGranularity,
   data,
+  xKey,
+  yKey,
 }: IProps) => {
   return (
     <div className='mb-4'>
@@ -36,23 +31,29 @@ export const SingleBarChart = ({
         <Tabs
           className=''
           aria-label='granularity'
+          selectedKey={granularity}
+          onSelectionChange={(key) => setGranularity(key as GranularityTypes)}
         >
-          {Object.keys(granularity).map(
-            (key) =>
-              granularity[key as keyof typeof granularity] && (
-                <Tab
-                  key={key}
-                  title={key.charAt(0).toUpperCase() + key.slice(1)}
-                />
-              )
-          )}
+          {[
+            'day',
+            // 'week',
+            'month',
+            'quarter',
+            'year',
+          ].map((key) => (
+            <Tab
+              key={key}
+              title={key.charAt(0).toUpperCase() + key.slice(1)}
+            />
+          ))}
         </Tabs>
       </div>
       <ResponsiveContainer
-        width='100%'
-        height='100%'
+        // width='100%'
+        // height='100%'
         minHeight={200}
         minWidth={200}
+        height={400}
       >
         <BarChart
           width={150}
@@ -60,12 +61,12 @@ export const SingleBarChart = ({
           data={data}
         >
           <CartesianGrid strokeDasharray='3 3' />
-          <XAxis dataKey='key' />
+          <XAxis dataKey={xKey} />
           <YAxis />
           <Tooltip />
           <Legend />
           <Bar
-            dataKey='value'
+            dataKey={yKey}
             fill={color}
           />
         </BarChart>

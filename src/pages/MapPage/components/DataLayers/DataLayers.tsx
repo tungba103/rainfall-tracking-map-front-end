@@ -13,7 +13,7 @@ export const SliderContext = createContext<{
 export const DataLayers = () => {
   const listLayers = dataManagementNavItems.subItems;
 
-  const [date, setDate] = useState(new CalendarDate(2024, 9, 1));
+  const [date, setDate] = useState(new CalendarDate(2024, 10, 1));
 
   const [layerStatus, setLayerStatus] = useState<Record<string, boolean>>(() => {
     const savedStatus = localStorage.getItem('layerStatus');

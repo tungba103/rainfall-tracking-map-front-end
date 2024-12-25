@@ -4,7 +4,7 @@ import { CreateModal } from './components/CreateModal';
 import { DeleteModal } from './components/DeleteModal';
 import { dataTypes } from '@/config/data-management.config';
 
-import { Dataset, getDatasets } from '../../api';
+import { Dataset, getDatasets } from '../../api/api';
 import DefaultLayout from '@/layouts/default';
 import { DateRangePicker, Select, SelectItem } from '@nextui-org/react';
 import { CustomTable } from './components/CustomTable';

@@ -2,7 +2,7 @@ import { DateValue, parseDate } from '@internationalized/date';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
 import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure } from '@nextui-org/react';
 import { InputFieldOptions, InputOptionsType } from './InputFieldOptions';
-import { postDataset } from '@/api';
+import { postDataset } from '@/api/api';
 import { useCreateFormConfig } from '@/hooks/useCreateFormConfig';
 import { useDataConfigByUrl } from '@/hooks/useDataConfigByUrl';
 import { useEffect } from 'react';

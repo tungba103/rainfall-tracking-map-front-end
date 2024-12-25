@@ -7,12 +7,12 @@ import { RangeValue } from '@react-types/shared';
 import { CalendarDate } from '@internationalized/date';
 
 export const CustomSlider = () => {
-  const { date, setDate } = useContext(SliderContext) || { date: new CalendarDate(2024, 10, 1), setDate: () => {} };
+  const { date, setDate } = useContext(SliderContext) || { date: new CalendarDate(2024, 4, 1), setDate: () => {} };
   console.log('CustomSlider', date.toString());
 
   const [value, setValue] = useState<RangeValue<CalendarDate>>({
-    start: new CalendarDate(2024, 9, 1),
-    end: new CalendarDate(2024, 10, 1),
+    start: new CalendarDate(2024, 10, 1),
+    end: new CalendarDate(2024, 11, 1),
   });
 
   const calculateDaysBetween = (start: CalendarDate, end: CalendarDate) => {
